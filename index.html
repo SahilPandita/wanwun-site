@@ -31,6 +31,29 @@
 </head>
 <body>
 
+<div class="site-backdrop" aria-hidden="true">
+  <div class="aurora"></div>
+  <svg class="mountains" viewBox="0 0 1440 340" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="mtnFar" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#8fffe3" stop-opacity="0.008"/>
+        <stop offset="1" stop-color="#5ae5c7" stop-opacity="0.032"/>
+      </linearGradient>
+      <linearGradient id="mtnMid" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#6af3d4" stop-opacity="0.010"/>
+        <stop offset="1" stop-color="#5ae5c7" stop-opacity="0.045"/>
+      </linearGradient>
+      <linearGradient id="mtnNear" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#14b89c" stop-opacity="0.015"/>
+        <stop offset="1" stop-color="#14b89c" stop-opacity="0.065"/>
+      </linearGradient>
+    </defs>
+    <path class="peak-far" fill="url(#mtnFar)" d="M-40,340 L-40,150 L90,60 L150,110 L240,30 L330,120 L410,55 L520,140 L610,70 L710,150 L800,45 L900,135 L1000,65 L1110,145 L1200,80 L1300,150 L1380,95 L1480,135 L1480,340 Z"/>
+    <path class="peak-mid" fill="url(#mtnMid)" d="M-40,340 L-40,210 L110,165 L210,215 L300,150 L410,220 L520,175 L640,235 L740,185 L860,240 L980,180 L1100,235 L1220,195 L1340,235 L1480,205 L1480,340 Z"/>
+    <path class="peak-near" fill="url(#mtnNear)" d="M-40,340 L-40,260 L180,240 L340,275 L520,248 L700,282 L880,255 L1060,285 L1240,258 L1420,282 L1480,272 L1480,340 Z"/>
+  </svg>
+</div>
+
 <header class="site-nav">
   <div class="wrap">
     <a class="brand" href="index.html"><img src="assets/icon.png" alt=""> Wanwun</a>
@@ -45,7 +68,7 @@
 <section class="hero">
   <div class="wrap">
     <span class="eyebrow">Closed beta — Kashmiri Pandit community</span>
-    <h1>Your Panchang,<br>computed for you.</h1>
+    <h1>Your Panchang,<br><span class="grad-text">computed for you.</span></h1>
     <p class="sub">Wanwun brings tithi, nakshatra, and festival dates computed for your
       exact city — not a printed calendar guessing on your behalf. Plus personal
       reminders and a full Bhajan, Shlok &amp; Aarti library.</p>
@@ -63,37 +86,37 @@
       like a sanctuary — not a utility.</p>
 
     <div class="feature-grid">
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">🌙</span>
         <h3>Computed Panchang</h3>
         <p>Tithi, nakshatra, yoga, karana, and masa — computed on-device via astronomical
           calculation (Lahiri ayanamsa), not a static yearly table.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">📍</span>
         <h3>Location-aware</h3>
         <p>Pick your city and every date and time adjusts to it — accurate wherever in the
           world you are.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">🔎</span>
         <h3>Search that forgives you</h3>
         <p>Find a day by tithi, date, festival, or reminder — even with typos, transliteration
           differences, or words in the wrong order.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">🎉</span>
         <h3>Festival accuracy</h3>
         <p>Festival dates are derived from computed rules, cross-checked against printed KP
           jantris — traceable, not guessed.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">🔔</span>
         <h3>Personal reminders</h3>
         <p>Birthdays, anniversaries, pujas — with real local notifications, independent of
           any account, private to your device.</p>
       </div>
-      <div class="feature-card">
+      <div class="feature-card reveal">
         <span class="emoji">🪔</span>
         <h3>Bhajans, Shloks &amp; Aartis</h3>
         <p>A categorized library with full lyrics and translations, ready whenever you
@@ -124,6 +147,26 @@
     <div class="copyright">© 2026 Sahil Pandita. Made for the Kashmiri Pandit community.</div>
   </div>
 </footer>
+
+<script>
+  // Reveal elements as they scroll into view (once).
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window) || !els.length) {
+      els.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 
 </body>
 </html>

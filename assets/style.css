@@ -29,6 +29,77 @@ body {
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Decorative top scene — aurora glow + barely-there mountain silhouettes.
+   Sits behind the nav + hero, purely atmospheric. */
+.site-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 760px;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Compact variant for content pages — just the top glow, no mountains. */
+.site-backdrop.compact {
+  height: 420px;
+}
+
+.site-backdrop .aurora {
+  position: absolute;
+  top: -220px;
+  left: 50%;
+  width: 1100px;
+  height: 720px;
+  transform: translateX(-50%);
+  background:
+    radial-gradient(closest-side at 32% 42%, rgba(90, 229, 199, 0.16), transparent 70%),
+    radial-gradient(closest-side at 68% 38%, rgba(106, 243, 212, 0.12), transparent 70%),
+    radial-gradient(closest-side at 50% 60%, rgba(20, 184, 156, 0.10), transparent 72%);
+  filter: blur(8px);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-drift {
+  0%   { transform: translateX(-50%) translateY(0) scale(1); opacity: 0.9; }
+  50%  { transform: translateX(-48%) translateY(14px) scale(1.05); opacity: 1; }
+  100% { transform: translateX(-52%) translateY(-10px) scale(1.02); opacity: 0.85; }
+}
+
+.site-backdrop .mountains {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 340px;
+  display: block;
+  filter: blur(1.4px);
+}
+
+.site-backdrop .mountains .peak-far  { animation: peak-sway 26s ease-in-out infinite alternate; }
+.site-backdrop .mountains .peak-mid  { animation: peak-sway 20s ease-in-out infinite alternate-reverse; }
+.site-backdrop .mountains .peak-near { animation: peak-sway 32s ease-in-out infinite alternate; }
+
+@keyframes peak-sway {
+  from { transform: translateX(-8px); }
+  to   { transform: translateX(8px); }
+}
+
+/* A soft fade so the scene melts into the page background at its lower edge. */
+.site-backdrop::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--surface));
 }
 
 a {
@@ -50,6 +121,8 @@ a:hover {
 header.site-nav {
   padding: 24px 0;
   border-bottom: none;
+  position: relative;
+  z-index: 3;
 }
 
 header.site-nav .wrap {
@@ -74,6 +147,12 @@ header.site-nav .wrap {
   height: 32px;
   width: 32px;
   border-radius: 9px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease;
+}
+
+.brand:hover img {
+  transform: rotate(-6deg) scale(1.08);
+  box-shadow: 0 0 22px rgba(90, 229, 199, 0.45);
 }
 
 nav.links {
@@ -92,16 +171,37 @@ nav.links {
 
 nav.links a {
   color: var(--on-surface-variant);
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+nav.links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1.5px;
+  background: linear-gradient(90deg, var(--primary), var(--primary-dim));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
 nav.links a:hover {
   color: var(--on-surface);
 }
 
+nav.links a:hover::after {
+  transform: scaleX(1);
+}
+
 /* Hero */
 .hero {
   padding: 72px 0 56px;
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 .hero .eyebrow {
@@ -114,6 +214,32 @@ nav.links a:hover {
   font-weight: 600;
   letter-spacing: 0.02em;
   margin-bottom: 24px;
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.14);
+  animation: eyebrow-glow 3.6s ease-in-out infinite;
+}
+
+.hero .eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--primary);
+  margin-right: 8px;
+  vertical-align: middle;
+  box-shadow: 0 0 8px var(--primary);
+  animation: dot-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes eyebrow-glow {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.14), 0 0 0 0 rgba(90, 229, 199, 0.0); }
+  50%      { box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.30), 0 0 22px 0 rgba(90, 229, 199, 0.18); }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.82); }
 }
 
 .hero h1 {
@@ -122,6 +248,21 @@ nav.links a:hover {
   letter-spacing: -0.02em;
   margin: 0 0 20px;
   font-weight: 800;
+}
+
+/* Animated emerald gradient on the emphasized phrase */
+.grad-text {
+  background: linear-gradient(100deg, var(--primary) 0%, var(--primary-dim) 30%, #b8fff0 50%, var(--primary-dim) 70%, var(--primary) 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: grad-shift 6s linear infinite;
+}
+
+@keyframes grad-shift {
+  to { background-position: 220% center; }
 }
 
 .hero p.sub {
@@ -146,16 +287,43 @@ nav.links a:hover {
   font-size: 0.98rem;
   cursor: pointer;
   border: none;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.98);
 }
 
 .btn-primary {
   background: linear-gradient(45deg, var(--primary) 0%, var(--primary-dim) 100%);
   color: var(--on-primary);
+  box-shadow: 0 8px 24px -10px rgba(90, 229, 199, 0.6);
+}
+
+/* Sheen that sweeps across on hover */
+.btn-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-18deg);
+  transition: left 0.6s ease;
 }
 
 .btn-primary:hover {
   text-decoration: none;
-  filter: brightness(1.05);
+  filter: brightness(1.06);
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -10px rgba(90, 229, 199, 0.75);
+}
+
+.btn-primary:hover::after {
+  left: 130%;
 }
 
 .btn-secondary {
@@ -167,11 +335,15 @@ nav.links a:hover {
 .btn-secondary:hover {
   text-decoration: none;
   background: var(--surface-container-low);
+  transform: translateY(-2px);
+  box-shadow: inset 0 0 0 1px rgba(90, 229, 199, 0.55), 0 0 20px -6px rgba(90, 229, 199, 0.4);
 }
 
 /* Feature grid */
 .features {
   padding: 40px 0 72px;
+  position: relative;
+  z-index: 1;
 }
 
 .feature-grid {
@@ -191,12 +363,59 @@ nav.links a:hover {
   background: var(--surface-container-low);
   border-radius: 28px;
   padding: 28px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+  box-shadow: inset 0 0 0 1px rgba(72, 72, 72, 0);
+}
+
+/* Emerald wash that fades in from the top-left on hover */
+.feature-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(90, 229, 199, 0.10), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: inset 0 0 0 1px rgba(90, 229, 199, 0.22), 0 20px 40px -22px rgba(0, 0, 0, 0.8);
+}
+
+.feature-card:hover::before {
+  opacity: 1;
 }
 
 .feature-card .emoji {
   font-size: 1.6rem;
   margin-bottom: 14px;
-  display: block;
+  display: inline-block;
+  animation: emoji-float 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Stagger the idle float so the grid doesn't bob in unison */
+.feature-card:nth-child(2n) .emoji   { animation-delay: -1.2s; }
+.feature-card:nth-child(3n) .emoji   { animation-delay: -2.4s; }
+.feature-card:nth-child(4n) .emoji   { animation-delay: -3.1s; }
+
+.feature-card:hover .emoji {
+  animation: emoji-pop 0.6s ease;
+}
+
+@keyframes emoji-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-5px); }
+}
+
+@keyframes emoji-pop {
+  0%   { transform: scale(1) rotate(0); }
+  40%  { transform: scale(1.28) rotate(-8deg); }
+  70%  { transform: scale(1.1) rotate(5deg); }
+  100% { transform: scale(1) rotate(0); }
 }
 
 .feature-card h3 {
@@ -226,6 +445,12 @@ nav.links a:hover {
   margin: 10px auto 0;
 }
 
+/* Ensure real card content sits above the hover wash pseudo-element */
+.feature-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 /* Privacy strip */
 .privacy-strip {
   background: var(--surface-container-low);
@@ -233,6 +458,29 @@ nav.links a:hover {
   padding: 36px 32px;
   margin: 0 0 72px;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.4s ease;
+}
+
+/* Slow-breathing emerald aura behind the privacy strip */
+.privacy-strip::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(closest-side at 50% 50%, rgba(90, 229, 199, 0.08), transparent 70%);
+  animation: strip-breathe 8s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.privacy-strip > * {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes strip-breathe {
+  0%, 100% { opacity: 0.5; transform: scale(0.95); }
+  50%      { opacity: 1; transform: scale(1.05); }
 }
 
 .privacy-strip h3 {
@@ -250,6 +498,8 @@ footer {
   padding: 40px 0 60px;
   border-top: none;
   margin-top: 40px;
+  position: relative;
+  z-index: 1;
 }
 
 footer .wrap {
@@ -270,10 +520,11 @@ footer .foot-links {
 
 footer .foot-links a {
   color: var(--on-surface-variant);
+  transition: color 0.25s ease;
 }
 
 footer .foot-links a:hover {
-  color: var(--on-surface);
+  color: var(--primary);
 }
 
 footer .copyright {
@@ -284,6 +535,8 @@ footer .copyright {
 /* Legal / doc pages */
 .doc {
   padding: 56px 0 80px;
+  position: relative;
+  z-index: 1;
 }
 
 .doc h1 {
@@ -353,4 +606,36 @@ footer .copyright {
 .callout p {
   color: var(--on-surface);
   margin: 0;
+}
+
+/* Scroll-reveal — elements fade + rise into view once, staggered by the grid */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.feature-grid .reveal:nth-child(2) { transition-delay: 0.06s; }
+.feature-grid .reveal:nth-child(3) { transition-delay: 0.12s; }
+.feature-grid .reveal:nth-child(4) { transition-delay: 0.18s; }
+.feature-grid .reveal:nth-child(5) { transition-delay: 0.24s; }
+.feature-grid .reveal:nth-child(6) { transition-delay: 0.30s; }
+
+/* Respect users who prefer reduced motion — kill all ambient animation. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
 }
