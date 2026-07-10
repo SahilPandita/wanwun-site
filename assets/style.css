@@ -7,11 +7,38 @@
   --on-surface: #e7e5e4;
   --on-surface-variant: #acabaa;
   --outline-variant: #484848;
-  --primary: #8fffe3;
-  --primary-dim: #5ae5c7;
-  --primary-container: #6af3d4;
-  --on-primary: #003730;
+  /* Chinar red — replaces the old Emerald Monolith accent everywhere on the site. */
+  --primary: #812a26;
+  --primary-dim: #5e1f1c;
+  --primary-bright: #d9695f;
+  --primary-container: #9c3830;
+  --on-primary: #fdece9;
   --max-width: 880px;
+
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --surface: #f7f6f5;
+  --surface-container-low: #ffffff;
+  --surface-container-highest: #efe6e4;
+  --on-surface: #211a19;
+  --on-surface-variant: #5f5450;
+  --outline-variant: #d8cac6;
+  --primary: #812a26;
+  --primary-dim: #5e1f1c;
+  --primary-bright: #a83f39;
+  --primary-container: #9c3830;
+  --on-primary: #fdece9;
+
+  color-scheme: light;
+}
+
+/* Smooth cross-fade whenever the theme flips, instead of a hard cut. */
+body, .site-nav, .feature-card, .privacy-strip, .callout, .doc th, .doc td,
+.btn-secondary, .hero .eyebrow, .brand, nav.links a, footer .foot-links a,
+.section-title, .section-sub, .hero h1, .hero p.sub {
+  transition: background-color 0.9s ease, color 0.9s ease, box-shadow 0.9s ease;
 }
 
 * {
@@ -40,7 +67,7 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  height: 760px;
+  height: 880px;
   overflow: hidden;
   z-index: 0;
   pointer-events: none;
@@ -59,9 +86,9 @@ body {
   height: 720px;
   transform: translateX(-50%);
   background:
-    radial-gradient(closest-side at 32% 42%, rgba(90, 229, 199, 0.16), transparent 70%),
-    radial-gradient(closest-side at 68% 38%, rgba(106, 243, 212, 0.12), transparent 70%),
-    radial-gradient(closest-side at 50% 60%, rgba(20, 184, 156, 0.10), transparent 72%);
+    radial-gradient(closest-side at 32% 42%, rgba(129, 42, 38, 0.16), transparent 70%),
+    radial-gradient(closest-side at 68% 38%, rgba(156, 56, 48, 0.12), transparent 70%),
+    radial-gradient(closest-side at 50% 60%, rgba(94, 31, 28, 0.10), transparent 72%);
   filter: blur(8px);
   animation: aurora-drift 22s ease-in-out infinite alternate;
 }
@@ -72,34 +99,460 @@ body {
   100% { transform: translateX(-52%) translateY(-10px) scale(1.02); opacity: 0.85; }
 }
 
-.site-backdrop .mountains {
+/* The moon (dark) or sun (light) hanging in the distant sky, casting a soft
+   glow. The clouds drift in front of it (they're rendered later in the DOM),
+   and its glow gently breathes so the light seems to wax and wane as clouds
+   pass over it. */
+.sky-body {
   position: absolute;
-  bottom: 0;
+  top: 150px;
+  left: 16%;
+  width: 66px;
+  height: 66px;
+  pointer-events: none;
+  /* Soft ambient halo that pulses — the "gentle light in the distance". */
+  animation: sky-glow 14s ease-in-out infinite;
+}
+
+.body-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  /* Moon: a pale disc lit from the upper-left, pocked with craters — each one
+     a soft dark bowl with a faint bright rim on its lit side. */
+  background:
+    /* craters (bowl + offset rim highlight pairs) */
+    radial-gradient(circle at 44% 22%, rgba(122, 98, 76, 0.34) 0 7.5%, rgba(122, 98, 76, 0) 10%),
+    radial-gradient(circle at 42% 19%, rgba(255, 250, 240, 0.30) 0 2%, rgba(255, 250, 240, 0) 8%),
+    radial-gradient(circle at 72% 34%, rgba(122, 98, 76, 0.30) 0 5.5%, rgba(122, 98, 76, 0) 8%),
+    radial-gradient(circle at 70% 31%, rgba(255, 250, 240, 0.24) 0 1.6%, rgba(255, 250, 240, 0) 6%),
+    radial-gradient(circle at 26% 44%, rgba(122, 98, 76, 0.26) 0 4.5%, rgba(122, 98, 76, 0) 7%),
+    radial-gradient(circle at 63% 62%, rgba(115, 90, 68, 0.32) 0 6.5%, rgba(115, 90, 68, 0) 9.5%),
+    radial-gradient(circle at 60% 58%, rgba(255, 250, 240, 0.22) 0 1.8%, rgba(255, 250, 240, 0) 6%),
+    radial-gradient(circle at 38% 74%, rgba(122, 98, 76, 0.28) 0 5%, rgba(122, 98, 76, 0) 7.5%),
+    radial-gradient(circle at 82% 52%, rgba(122, 98, 76, 0.22) 0 3.5%, rgba(122, 98, 76, 0) 6%),
+    radial-gradient(circle at 52% 42%, rgba(122, 98, 76, 0.18) 0 3%, rgba(122, 98, 76, 0) 5%),
+    radial-gradient(circle at 20% 62%, rgba(122, 98, 76, 0.20) 0 2.6%, rgba(122, 98, 76, 0) 4.5%),
+    radial-gradient(circle at 55% 84%, rgba(122, 98, 76, 0.24) 0 3.4%, rgba(122, 98, 76, 0) 5.5%),
+    radial-gradient(circle at 30% 30%, rgba(122, 98, 76, 0.16) 0 2.2%, rgba(122, 98, 76, 0) 4%),
+    /* base sphere shading */
+    radial-gradient(circle at 37% 35%, #f7efe6 0%, #e7dccb 48%, #cdbda2 78%, #b6a488 100%);
+  box-shadow:
+    inset -8px -8px 18px rgba(120, 96, 74, 0.28),
+    inset 5px 5px 14px rgba(255, 250, 242, 0.35);
+  animation: body-shimmer 7s ease-in-out infinite;
+}
+
+/* The halo glow, drawn behind the disc via the parent's ::before. */
+.sky-body::before {
+  content: "";
+  position: absolute;
+  inset: -48px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(246, 224, 214, 0.26), rgba(246, 224, 214, 0) 72%);
+}
+
+/* Sun (light mode): warmer, brighter, stronger glow. */
+html[data-theme="light"] .body-disc {
+  background:
+    radial-gradient(circle at 42% 40%, #fff6df 0%, #ffdf9e 46%, #ffc061 76%, #f4a83a 100%);
+  box-shadow:
+    0 0 22px rgba(255, 190, 90, 0.55),
+    inset -6px -6px 16px rgba(220, 140, 40, 0.30),
+    inset 6px 6px 16px rgba(255, 252, 235, 0.55);
+}
+
+html[data-theme="light"] .sky-body::before {
+  inset: -64px;
+  background: radial-gradient(closest-side, rgba(255, 198, 110, 0.40), rgba(255, 198, 110, 0) 72%);
+}
+
+@keyframes sky-glow {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 1;    transform: scale(1.05); }
+}
+
+@keyframes body-shimmer {
+  0%, 100% { filter: brightness(0.96); }
+  50%      { filter: brightness(1.12); }
+}
+
+.site-backdrop .clouds {
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 340px;
+  height: 300px;
+}
+
+/* Each cloud is a cluster of blurred puffs drifting on its own wind speed and
+   direction — a fast low one, a slow high one, a middling one — with a gentle
+   vertical bob so the sky feels alive rather than sliding in lockstep. */
+.cloud { will-change: transform; }
+.cloud-a { animation: cloud-drift-a 48s ease-in-out infinite alternate; }
+.cloud-b { animation: cloud-drift-b 82s ease-in-out infinite alternate; }
+.cloud-c { animation: cloud-drift-c 36s ease-in-out infinite alternate; }
+
+@keyframes cloud-drift-a {
+  0%   { transform: translate(-90px, 0); }
+  50%  { transform: translate(20px, -6px); }
+  100% { transform: translate(140px, 3px); }
+}
+@keyframes cloud-drift-b {
+  0%   { transform: translate(110px, 2px); }
+  50%  { transform: translate(0, -5px); }
+  100% { transform: translate(-130px, 4px); }
+}
+@keyframes cloud-drift-c {
+  0%   { transform: translate(-70px, 0); }
+  50%  { transform: translate(30px, 5px); }
+  100% { transform: translate(110px, -3px); }
+}
+
+/* Faint stars, visible only against the dark sky; each twinkles on its own beat. */
+.site-backdrop .stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  transition: opacity 0.6s ease;
+}
+
+html[data-theme="light"] .site-backdrop .stars {
+  opacity: 0;
+}
+
+.star {
+  opacity: 0.4;
+  animation: star-twinkle 4s ease-in-out infinite;
+}
+.star:nth-child(2n) { animation-delay: -1.3s; animation-duration: 5.2s; }
+.star:nth-child(3n) { animation-delay: -2.1s; animation-duration: 3.4s; }
+.star:nth-child(5n) { animation-delay: -3.2s; animation-duration: 6.1s; }
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.12; }
+  50%      { opacity: 0.65; }
+}
+
+.site-backdrop .mountains {
+  position: absolute;
+  bottom: 120px;
+  left: 0;
+  width: 100%;
+  height: 360px;
   display: block;
-  filter: blur(1.4px);
+  filter: blur(0.6px);
 }
 
-.site-backdrop .mountains .peak-far  { animation: peak-sway 26s ease-in-out infinite alternate; }
-.site-backdrop .mountains .peak-mid  { animation: peak-sway 20s ease-in-out infinite alternate-reverse; }
-.site-backdrop .mountains .peak-near { animation: peak-sway 32s ease-in-out infinite alternate; }
+/* Mountains stay still; the trees sway gently in the wind, each group on its
+   own beat so the treeline shimmers like a real forest catching a breeze. */
+.site-backdrop .mountains .tg {
+  transform-origin: 50% 100%;
+}
+.site-backdrop .mountains .tg-1 { animation: tree-sway 7s ease-in-out infinite alternate; }
+.site-backdrop .mountains .tg-2 { animation: tree-sway 9s ease-in-out infinite alternate-reverse; }
+.site-backdrop .mountains .tg-3 { animation: tree-sway 8s ease-in-out infinite alternate; }
 
-@keyframes peak-sway {
-  from { transform: translateX(-8px); }
-  to   { transform: translateX(8px); }
+@keyframes tree-sway {
+  from { transform: skewX(-1.4deg); }
+  to   { transform: skewX(1.4deg); }
 }
 
-/* A soft fade so the scene melts into the page background at its lower edge. */
+/* River at the foothills — a still band of water where the mountains meet the
+   valley floor, catching the light of the moon/sun and carrying a houseboat. */
+.river {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 224px;
+  z-index: 1;
+  overflow: hidden;
+  /* The lake dissolves into the page: colors thin out toward the bottom, and a
+     mask feathers the whole band away so there is never a hard edge. */
+  background: linear-gradient(to bottom,
+    #1c1113 0%, #140c0d 28%, rgba(14, 10, 11, 0.8) 52%, rgba(14, 10, 11, 0) 94%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 42%, transparent 97%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 14%, #000 42%, transparent 97%);
+}
+
+/* Light-mode lakebed is a second layer that CROSS-FADES via opacity (gradients
+   themselves can't transition, which is what caused the square flicker). */
+.river::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+    #e7ded9 0%, #eee6e2 28%, rgba(244, 237, 233, 0.8) 52%, rgba(244, 237, 233, 0) 94%);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+html[data-theme="light"] .river::before {
+  opacity: 1;
+}
+
+/* The animated surface (waves, glints, ripples) lives in the top band only;
+   below it the lake is just calm, fading bed. */
+.river .water {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 110px;
+}
+
+/* Broken wave crests in three depth bands. Perspective physics: far crests
+   are small, faint, slow; near crests are longer, bolder, faster and softer-
+   edged. Every segment breathes on its own beat (--wd delay, --wo opacity),
+   and a few "curl" crests hook back on themselves like tiny breaking waves. */
+.wseg {
+  fill: none;
+  stroke: rgba(246, 224, 214, 0.14);
+  stroke-width: 1.1;
+  stroke-linecap: round;
+  opacity: calc(var(--wo, 0.7) * 0.8);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: crest-breathe 6s ease-in-out var(--wd, 0s) infinite;
+}
+html[data-theme="light"] .wseg { stroke: rgba(160, 130, 105, 0.35); }
+
+.waves-far  { animation: band-drift 34s linear infinite alternate; }
+.waves-mid  { animation: band-drift 21s linear infinite alternate-reverse; filter: blur(0.3px); }
+.waves-mid .wseg  { stroke-width: 1.4; }
+.waves-near { animation: band-drift 12s linear infinite alternate; filter: blur(0.6px); }
+.waves-near .wseg { stroke-width: 1.8; stroke: rgba(246, 224, 214, 0.20); }
+html[data-theme="light"] .waves-near .wseg { stroke: rgba(150, 118, 92, 0.45); }
+
+@keyframes band-drift {
+  from { transform: translateX(-26px); }
+  to   { transform: translateX(26px); }
+}
+
+/* Crests rise, gleam, and sink back into the surface. */
+@keyframes crest-breathe {
+  0%, 100% { opacity: calc(var(--wo, 0.7) * 0.25); transform: translateY(0.5px) scaleX(0.94); }
+  50%      { opacity: var(--wo, 0.7);               transform: translateY(-0.5px) scaleX(1.06); }
+}
+
+/* Breaking curls flash brighter and briefer than plain crests. */
+.wseg.curl {
+  stroke-width: 1.7;
+  animation: curl-break 5s ease-in-out var(--wd, 0s) infinite;
+}
+
+@keyframes curl-break {
+  0%, 62%, 100% { opacity: 0; }
+  72%           { opacity: var(--wo, 0.8); }
+  86%           { opacity: calc(var(--wo, 0.8) * 0.5); }
+}
+
+/* The moon/sun glitter path — a hazy smear of scattered, blurred light-ovals
+   directly beneath the body, widest near the viewer and shimmering. */
+.glint {
+  fill: rgba(246, 224, 214, 0.7);
+  opacity: var(--o, 0.6);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: glint-shimmer 5s ease-in-out infinite;
+}
+html[data-theme="light"] .glint { fill: rgba(255, 198, 110, 0.8); }
+.glint:nth-child(2n) { animation-duration: 6.4s; animation-delay: -1.5s; }
+.glint:nth-child(3n) { animation-duration: 4.1s; animation-delay: -2.7s; }
+.glint:nth-child(5n) { animation-duration: 7.2s; animation-delay: -3.6s; }
+
+@keyframes glint-shimmer {
+  0%, 100% { opacity: calc(var(--o, 0.6) * 0.35); transform: translateX(-2px) scale(0.85); }
+  50%      { opacity: var(--o, 0.6);               transform: translateX(3px) scale(1.15); }
+}
+
+/* Circular ripples spreading on the surface, flattened into ellipses by
+   perspective — like a fish or frog stirring the water. */
+.ripples { transform: scaleY(0.34); transform-origin: center; }
+.rip {
+  fill: none;
+  stroke: rgba(246, 224, 214, 0.22);
+  stroke-width: 1.4;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ripple-out var(--dur, 6s) ease-out var(--d, 0s) infinite;
+}
+html[data-theme="light"] .rip { stroke: rgba(150, 120, 90, 0.30); }
+
+/* transform:scale (not rx/ry) so ripples animate in every browser. */
+@keyframes ripple-out {
+  0%   { transform: scale(0.05); opacity: 0; }
+  12%  { opacity: 0.6; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* The houseboat drifts left→right across the river, bobbing gently. */
+.boat {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  width: 78px;
+  height: 30px;
+  animation: boat-sail 54s linear infinite;
+  animation-delay: -14s;
+}
+
+.boat-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: auto;
+  fill: #0c0809;
+  opacity: 0.85;
+  animation: boat-bob 4.5s ease-in-out infinite;
+}
+html[data-theme="light"] .boat-svg { fill: #6d605b; opacity: 0.62; }
+
+/* Water-contact highlight right at the hull's waterline so it sits IN the
+   water rather than floating above it. */
+.boat-wake {
+  position: absolute;
+  left: 50%;
+  top: 25px;
+  width: 82px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(246, 224, 214, 0.16), transparent 72%);
+  animation: boat-bob 4.5s ease-in-out infinite;
+}
+html[data-theme="light"] .boat-wake {
+  background: radial-gradient(closest-side, rgba(120, 100, 80, 0.14), transparent 72%);
+}
+
+/* Trailing V-wake: the boat sails left→right, so two faint diverging streaks
+   fan out behind the stern and fade with distance. */
+.boat-wake::before,
+.boat-wake::after {
+  content: "";
+  position: absolute;
+  right: 92%;
+  top: 50%;
+  width: 64px;
+  height: 1.6px;
+  border-radius: 1px;
+  background: linear-gradient(to left, rgba(246, 224, 214, 0.22), rgba(246, 224, 214, 0));
+  transform-origin: right center;
+}
+.boat-wake::before { transform: rotate(4deg); }
+.boat-wake::after  { transform: rotate(-4deg); }
+
+html[data-theme="light"] .boat-wake::before,
+html[data-theme="light"] .boat-wake::after {
+  background: linear-gradient(to left, rgba(120, 100, 80, 0.28), rgba(120, 100, 80, 0));
+}
+
+/* A blurred, flipped copy of the hull shimmering in the water just below it. */
+.boat-mirror {
+  position: absolute;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: auto;
+  fill: #0c0809;
+  opacity: 0.22;
+  transform: scaleY(-1);
+  transform-origin: top;
+  filter: blur(2.5px);
+  animation: mirror-wobble 4.5s ease-in-out infinite;
+}
+html[data-theme="light"] .boat-mirror { fill: #6d605b; opacity: 0.16; }
+
+/* The warm lamp on the roof at the stern — night only (no lamp lit in daylight),
+   a fuzzy yellow glow that flickers. */
+.boat-lamp {
+  position: absolute;
+  top: 4px;
+  left: 58px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffd27a;
+  box-shadow:
+    0 0 5px 2px rgba(255, 200, 105, 0.9),
+    0 0 12px 5px rgba(255, 180, 80, 0.5),
+    0 0 22px 9px rgba(255, 170, 70, 0.22);
+  animation: lamp-flicker 3.2s ease-in-out infinite, boat-bob 4.5s ease-in-out infinite;
+}
+
+/* The lamp's warm reflection streaking straight down into the water below it. */
+.boat-lamp-reflect {
+  position: absolute;
+  top: 26px;
+  left: 55px;
+  width: 11px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, rgba(255, 190, 90, 0.5), rgba(255, 170, 70, 0));
+  filter: blur(3px);
+  transform-origin: top center;
+  animation: lamp-flicker 3.2s ease-in-out infinite, lampref-wobble 4.5s ease-in-out infinite;
+}
+
+@keyframes lampref-wobble {
+  0%, 100% { transform: skewX(0deg) scaleY(1); }
+  50%      { transform: skewX(6deg) scaleY(1.12); }
+}
+
+/* No lamp (or its reflection) in daylight. */
+html[data-theme="light"] .boat-lamp,
+html[data-theme="light"] .boat-lamp-reflect {
+  display: none;
+}
+
+@keyframes boat-sail {
+  from { transform: translateX(-90px); }
+  to   { transform: translateX(calc(100vw + 90px)); }
+}
+@keyframes boat-bob {
+  0%, 100% { transform: translateY(0) rotate(-0.8deg); }
+  50%      { transform: translateY(-2px) rotate(0.8deg); }
+}
+@keyframes mirror-wobble {
+  0%, 100% { transform: scaleY(-1) translateY(0) skewX(0deg); opacity: 0.22; }
+  50%      { transform: scaleY(-1) translateY(1px) skewX(4deg); opacity: 0.14; }
+}
+@keyframes lamp-flicker {
+  0%   { opacity: 0.85; filter: brightness(1); }
+  12%  { opacity: 1;    filter: brightness(1.15); }
+  20%  { opacity: 0.7;  filter: brightness(0.85); }
+  32%  { opacity: 0.95; filter: brightness(1.08); }
+  46%  { opacity: 0.6;  filter: brightness(0.8); }
+  58%  { opacity: 1;    filter: brightness(1.2); }
+  70%  { opacity: 0.82; filter: brightness(0.98); }
+  84%  { opacity: 0.92; filter: brightness(1.05); }
+  100% { opacity: 0.85; filter: brightness(1); }
+}
+
+/* A soft fade so the scene melts into the page background at its lower edge.
+   Solid color + mask (not a gradient) so it can cross-fade on theme change. */
 .site-backdrop::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
-  height: 180px;
-  background: linear-gradient(to bottom, transparent, var(--surface));
+  height: 200px;
+  background-color: var(--surface);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 92%);
+  mask-image: linear-gradient(to bottom, transparent, #000 92%);
+  transition: background-color 0.9s ease;
+  z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boat { animation: none; left: 40%; }
+  .boat-svg, .boat-mirror, .boat-lamp, .water-reflection, .water-ripples {
+    animation: none;
+  }
 }
 
 a {
@@ -152,7 +605,7 @@ header.site-nav .wrap {
 
 .brand:hover img {
   transform: rotate(-6deg) scale(1.08);
-  box-shadow: 0 0 22px rgba(90, 229, 199, 0.45);
+  box-shadow: 0 0 22px rgba(129, 42, 38, 0.45);
 }
 
 nav.links {
@@ -209,13 +662,13 @@ nav.links a:hover::after {
   padding: 6px 16px;
   border-radius: 9999px;
   background: var(--surface-container-highest);
-  color: var(--primary);
+  color: var(--on-surface);
   font-size: 0.82rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   margin-bottom: 24px;
   position: relative;
-  box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.14);
+  box-shadow: 0 0 0 1px rgba(129, 42, 38, 0.14);
   animation: eyebrow-glow 3.6s ease-in-out infinite;
 }
 
@@ -233,8 +686,8 @@ nav.links a:hover::after {
 }
 
 @keyframes eyebrow-glow {
-  0%, 100% { box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.14), 0 0 0 0 rgba(90, 229, 199, 0.0); }
-  50%      { box-shadow: 0 0 0 1px rgba(90, 229, 199, 0.30), 0 0 22px 0 rgba(90, 229, 199, 0.18); }
+  0%, 100% { box-shadow: 0 0 0 1px rgba(129, 42, 38, 0.14), 0 0 0 0 rgba(129, 42, 38, 0.0); }
+  50%      { box-shadow: 0 0 0 1px rgba(129, 42, 38, 0.30), 0 0 22px 0 rgba(129, 42, 38, 0.18); }
 }
 
 @keyframes dot-pulse {
@@ -252,7 +705,7 @@ nav.links a:hover::after {
 
 /* Animated emerald gradient on the emphasized phrase */
 .grad-text {
-  background: linear-gradient(100deg, var(--primary) 0%, var(--primary-dim) 30%, #b8fff0 50%, var(--primary-dim) 70%, var(--primary) 100%);
+  background: linear-gradient(100deg, var(--primary) 0%, var(--primary-dim) 30%, #f0b8b0 50%, var(--primary-dim) 70%, var(--primary) 100%);
   background-size: 220% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -279,6 +732,145 @@ nav.links a:hover::after {
   flex-wrap: wrap;
 }
 
+/* Hero: text + phone mockup side by side on wide screens */
+.hero-grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+}
+
+.hero-content {
+  flex: 1 1 420px;
+  max-width: 560px;
+  text-align: left;
+}
+
+.hero-content .sub {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.hero-content .cta-row {
+  justify-content: flex-start;
+}
+
+@media (max-width: 760px) {
+  .hero-content {
+    text-align: center;
+  }
+  .hero-content .sub {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hero-content .cta-row {
+    justify-content: center;
+  }
+}
+
+.hero-phone {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.phone-frame {
+  width: 220px;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 60px -20px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(129, 42, 38, 0.25),
+    0 0 40px -10px rgba(129, 42, 38, 0.35);
+  transform: rotate(2.5deg);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s ease;
+  animation: phone-float 6s ease-in-out infinite;
+}
+
+.phone-frame:hover {
+  transform: rotate(0deg) scale(1.03);
+}
+
+.phone-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes phone-float {
+  0%, 100% { transform: rotate(2.5deg) translateY(0); }
+  50%      { transform: rotate(2.5deg) translateY(-10px); }
+}
+
+@media (max-width: 760px) {
+  .hero-grid {
+    flex-direction: column;
+  }
+  .phone-frame {
+    width: 190px;
+  }
+}
+
+/* Google Play badge section */
+.get-app {
+  text-align: center;
+  padding: 8px 0 16px;
+}
+
+.play-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+  padding: 12px 24px;
+  border-radius: 14px;
+  background: #000;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(129, 42, 38, 0.3), 0 10px 26px -12px rgba(0, 0, 0, 0.6);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.play-badge:hover {
+  text-decoration: none;
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(129, 42, 38, 0.55), 0 14px 32px -12px rgba(129, 42, 38, 0.5);
+}
+
+.play-badge svg {
+  color: var(--primary-bright);
+  flex-shrink: 0;
+}
+
+.play-badge span {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.15;
+}
+
+.play-badge small {
+  font-size: 0.68rem;
+  letter-spacing: 0.04em;
+  color: #cfcfcf;
+}
+
+.play-badge strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.play-note {
+  margin: 14px 0 0;
+  font-size: 0.85rem;
+  color: var(--on-surface-variant);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-frame {
+    animation: none;
+  }
+}
+
 .btn {
   display: inline-block;
   padding: 14px 30px;
@@ -299,7 +891,7 @@ nav.links a:hover::after {
 .btn-primary {
   background: linear-gradient(45deg, var(--primary) 0%, var(--primary-dim) 100%);
   color: var(--on-primary);
-  box-shadow: 0 8px 24px -10px rgba(90, 229, 199, 0.6);
+  box-shadow: 0 8px 24px -10px rgba(129, 42, 38, 0.6);
 }
 
 /* Sheen that sweeps across on hover */
@@ -319,7 +911,7 @@ nav.links a:hover::after {
   text-decoration: none;
   filter: brightness(1.06);
   transform: translateY(-2px);
-  box-shadow: 0 14px 34px -10px rgba(90, 229, 199, 0.75);
+  box-shadow: 0 14px 34px -10px rgba(129, 42, 38, 0.75);
 }
 
 .btn-primary:hover::after {
@@ -336,7 +928,7 @@ nav.links a:hover::after {
   text-decoration: none;
   background: var(--surface-container-low);
   transform: translateY(-2px);
-  box-shadow: inset 0 0 0 1px rgba(90, 229, 199, 0.55), 0 0 20px -6px rgba(90, 229, 199, 0.4);
+  box-shadow: inset 0 0 0 1px rgba(129, 42, 38, 0.55), 0 0 20px -6px rgba(129, 42, 38, 0.4);
 }
 
 /* Feature grid */
@@ -350,7 +942,7 @@ nav.links a:hover::after {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 16px;
-  margin-top: 32px;
+  margin-top: 64px;
 }
 
 @media (max-width: 640px) {
@@ -366,15 +958,16 @@ nav.links a:hover::after {
   position: relative;
   overflow: hidden;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
-  box-shadow: inset 0 0 0 1px rgba(72, 72, 72, 0);
+  /* EXPERIMENT: real resting elevation (was invisible-until-hover), M3-style. */
+  box-shadow: inset 0 0 0 1px rgba(169, 41, 35, 0.14), 0 8px 24px -14px rgba(0, 0, 0, 0.6);
 }
 
-/* Emerald wash that fades in from the top-left on hover */
+/* EXPERIMENT: brick-red wash that fades in from the top-left on hover (was emerald) */
 .feature-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(120% 120% at 0% 0%, rgba(90, 229, 199, 0.10), transparent 55%);
+  background: radial-gradient(120% 120% at 0% 0%, rgba(169, 41, 35, 0.14), transparent 55%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
@@ -382,7 +975,7 @@ nav.links a:hover::after {
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: inset 0 0 0 1px rgba(90, 229, 199, 0.22), 0 20px 40px -22px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 0 0 1px rgba(169, 41, 35, 0.32), 0 20px 40px -18px rgba(0, 0, 0, 0.85);
 }
 
 .feature-card:hover::before {
@@ -468,7 +1061,7 @@ nav.links a:hover::after {
   content: "";
   position: absolute;
   inset: -40%;
-  background: radial-gradient(closest-side at 50% 50%, rgba(90, 229, 199, 0.08), transparent 70%);
+  background: radial-gradient(closest-side at 50% 50%, rgba(129, 42, 38, 0.08), transparent 70%);
   animation: strip-breathe 8s ease-in-out infinite;
   pointer-events: none;
 }
@@ -638,4 +1231,405 @@ footer .copyright {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Theme toggle — sun/moon switch, top bar */
+.theme-toggle {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface-container-highest);
+  box-shadow: inset 0 0 0 1px rgba(129, 42, 38, 0.18);
+  transition: box-shadow 0.3s ease, transform 0.2s ease, background-color 0.5s ease;
+  flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+  box-shadow: inset 0 0 0 1px rgba(129, 42, 38, 0.4), 0 0 16px -4px rgba(129, 42, 38, 0.5);
+  transform: translateY(-1px);
+}
+
+.theme-toggle:active {
+  transform: scale(0.92);
+}
+
+.theme-toggle svg {
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  transition: opacity 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.theme-toggle .icon-sun {
+  color: #f2b24d;
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.4);
+}
+
+.theme-toggle .icon-moon {
+  color: var(--primary-bright);
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+html[data-theme="light"] .theme-toggle .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+html[data-theme="light"] .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.4);
+}
+
+/* Little ray-burst pulse the moment the sun appears */
+@keyframes sun-burst {
+  0%   { filter: drop-shadow(0 0 0 rgba(242, 178, 77, 0)); }
+  40%  { filter: drop-shadow(0 0 8px rgba(242, 178, 77, 0.9)); }
+  100% { filter: drop-shadow(0 0 0 rgba(242, 178, 77, 0)); }
+}
+
+html[data-theme="light"] .theme-toggle .icon-sun {
+  animation: sun-burst 0.6s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle svg {
+    transition: opacity 0.2s ease;
+  }
+  .theme-toggle .icon-sun,
+  .theme-toggle .icon-moon {
+    transform: none;
+  }
+  html[data-theme="light"] .theme-toggle .icon-sun {
+    animation: none;
+  }
+}
+
+/* Cinematic theme switch — a soft, semi-transparent, heavily-blurred veil
+   blooms out of the toggle button, frosting the screen while the theme
+   cross-fades underneath, then dissolves to reveal the new day (or night).
+   Never a solid blackout: the veil is translucent so the change breathes
+   through it. Origin + radius are set from the button position in JS. */
+.theme-bloom {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  --bloom-x: 50%;
+  --bloom-y: 50%;
+  --bloom-r: 120vmax;
+}
+
+.theme-bloom::before {
+  content: "";
+  position: absolute;
+  left: var(--bloom-x);
+  top: var(--bloom-y);
+  width: calc(var(--bloom-r) * 2);
+  height: calc(var(--bloom-r) * 2);
+  margin-left: calc(var(--bloom-r) * -1);
+  margin-top: calc(var(--bloom-r) * -1);
+  border-radius: 50%;
+  transform: scale(0.04);
+  will-change: transform;
+  filter: blur(46px);
+  transition: transform 0.95s cubic-bezier(0.34, 0, 0.16, 1);
+}
+
+/* Translucent dusk / dawn wash — dense-ish core, long fuzzy transparent edge. */
+.theme-bloom.to-dark::before {
+  background: radial-gradient(closest-side,
+    rgba(16, 9, 10, 0.90) 0%,
+    rgba(28, 12, 11, 0.86) 58%,
+    rgba(58, 20, 15, 0.45) 82%,
+    rgba(58, 20, 15, 0) 100%);
+}
+
+.theme-bloom.to-light::before {
+  background: radial-gradient(closest-side,
+    rgba(252, 244, 241, 0.90) 0%,
+    rgba(251, 236, 232, 0.86) 58%,
+    rgba(250, 214, 205, 0.45) 82%,
+    rgba(250, 214, 205, 0) 100%);
+}
+
+.theme-bloom.growing {
+  opacity: 1;
+}
+
+.theme-bloom.growing::before {
+  transform: scale(1);
+}
+
+/* Once the theme has swapped underneath, dissolve the veil away smoothly. */
+.theme-bloom.fading {
+  opacity: 0;
+  transition: opacity 0.75s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-bloom { display: none; }
+}
+
+/* ── Celestial handoff — the theme switch as a performance ─────────────────
+   The outgoing sun/moon arcs clockwise up and off the top of the page,
+   shrinking into the distance; its counterpart rises from the left horizon
+   into the same seat, carrying the new light with it. Appearance locks keep
+   each body's face frozen during the handoff (independent of theme). */
+
+.sky-body.is-moon .body-disc {
+  background:
+    radial-gradient(circle at 44% 22%, rgba(122, 98, 76, 0.34) 0 7.5%, rgba(122, 98, 76, 0) 10%),
+    radial-gradient(circle at 42% 19%, rgba(255, 250, 240, 0.30) 0 2%, rgba(255, 250, 240, 0) 8%),
+    radial-gradient(circle at 72% 34%, rgba(122, 98, 76, 0.30) 0 5.5%, rgba(122, 98, 76, 0) 8%),
+    radial-gradient(circle at 26% 44%, rgba(122, 98, 76, 0.26) 0 4.5%, rgba(122, 98, 76, 0) 7%),
+    radial-gradient(circle at 63% 62%, rgba(115, 90, 68, 0.32) 0 6.5%, rgba(115, 90, 68, 0) 9.5%),
+    radial-gradient(circle at 38% 74%, rgba(122, 98, 76, 0.28) 0 5%, rgba(122, 98, 76, 0) 7.5%),
+    radial-gradient(circle at 82% 52%, rgba(122, 98, 76, 0.22) 0 3.5%, rgba(122, 98, 76, 0) 6%),
+    radial-gradient(circle at 37% 35%, #f7efe6 0%, #e7dccb 48%, #cdbda2 78%, #b6a488 100%) !important;
+  box-shadow:
+    inset -8px -8px 18px rgba(120, 96, 74, 0.28),
+    inset 5px 5px 14px rgba(255, 250, 242, 0.35) !important;
+}
+
+.sky-body.is-sun .body-disc {
+  background:
+    radial-gradient(circle at 42% 40%, #fff6df 0%, #ffdf9e 46%, #ffc061 76%, #f4a83a 100%) !important;
+  box-shadow:
+    0 0 22px rgba(255, 190, 90, 0.55),
+    inset -6px -6px 16px rgba(220, 140, 40, 0.30),
+    inset 6px 6px 16px rgba(255, 252, 235, 0.55) !important;
+}
+
+.sky-body.is-moon::before {
+  inset: -48px !important;
+  background: radial-gradient(closest-side, rgba(246, 224, 214, 0.26), rgba(246, 224, 214, 0) 72%) !important;
+}
+
+.sky-body.is-sun::before {
+  inset: -64px !important;
+  background: radial-gradient(closest-side, rgba(255, 198, 110, 0.40), rgba(255, 198, 110, 0) 72%) !important;
+}
+
+/* Act 1 — the sitting body departs: one continuous clockwise arc up and over,
+   traced by an offset-path so a single easing spans the whole journey (no
+   per-waypoint deceleration — the old stutter). As it climbs it recedes into
+   atmosphere: shrinking, blurring, and washing out until it dissolves. */
+/* Path coordinates are relative to the element's top-left, but its CENTER is
+   what rides the path — so points are shifted by half the body's 66px size.
+   The path is the arc real suns trace: a segment of a HUGE circle (R=550,
+   center far below the page), so the body glides clockwise up-and-right
+   along a gentle dome — clearly curved, never steep. Critically it stays
+   fully ON SCREEN for the whole flight (crest ≈110px above the seat), and
+   the dissolve completes at ~78%, so it melts into the haze mid-glide
+   rather than clipping off the page edge (the old "yank"). */
+.sky-body.exit-arc {
+  offset-path: path('M 33 33 A 550 550 0 0 1 520 -54');
+  offset-rotate: 0deg;
+  will-change: offset-distance, opacity, filter;
+  animation: celestial-exit 1.8s cubic-bezier(0.33, 0, 0.55, 1) forwards;
+}
+
+@keyframes celestial-exit {
+  0%   { offset-distance: 0%;   opacity: 1;    scale: 1;   filter: blur(0px) saturate(1) brightness(1); }
+  30%  {                        opacity: 0.95; scale: 0.8; filter: blur(0.8px) saturate(0.95) brightness(1.05); }
+  78%  {                        opacity: 0;    scale: 0.42; filter: blur(6px) saturate(0.65) brightness(1.2); }
+  100% { offset-distance: 100%; opacity: 0;    scale: 0.3; filter: blur(7px) saturate(0.6) brightness(1.25); }
+}
+
+/* Act 2 — the successor rises from beyond the left horizon on the same kind
+   of continuous arc: born hazy, washed-out and distant, sharpening and
+   brightening as it approaches its seat. */
+.sky-body.enter-arc {
+  offset-path: path('M -387 223 C -267 185, -147 125, -47 73 C 1 49, 24 37, 33 33');
+  offset-rotate: 0deg;
+  animation: celestial-enter 1.7s cubic-bezier(0.16, 0.5, 0.22, 1) 0.25s both;
+}
+
+@keyframes celestial-enter {
+  0%   { offset-distance: 0%;   opacity: 0;    scale: 0.5;  filter: blur(7px) brightness(1.25) saturate(0.6); }
+  28%  {                        opacity: 0.9;               }
+  65%  {                        opacity: 1;    scale: 0.86; filter: blur(1.8px) brightness(1.08) saturate(0.85); }
+  100% { offset-distance: 100%; opacity: 1;    scale: 1;    filter: blur(0px) brightness(1) saturate(1); }
+}
+
+/* The light the riser carries: a soft radial wash sweeping from the left
+   horizon across the sky — warm gold for dawn, deep dusk for nightfall.
+   Sheer enough that the performance stays visible through it. */
+.sky-wash {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.sky-wash.to-light {
+  background: radial-gradient(150vmax 150vmax at 12% 240px,
+    rgba(255, 214, 150, 0.5), rgba(255, 236, 214, 0.3) 34%, rgba(255, 240, 226, 0.16) 62%, rgba(255, 246, 235, 0) 100%);
+}
+
+.sky-wash.to-dark {
+  background: radial-gradient(150vmax 150vmax at 12% 240px,
+    rgba(34, 18, 24, 0.6), rgba(22, 13, 17, 0.36) 34%, rgba(16, 10, 13, 0.18) 62%, rgba(12, 9, 11, 0) 100%);
+}
+
+.sky-wash.washing {
+  animation: wash-sweep 1.6s ease-in-out forwards;
+}
+
+@keyframes wash-sweep {
+  0%   { opacity: 0; }
+  45%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sky-wash { display: none; }
+}
+
+/* ── Light-aware ridge lighting ────────────────────────────────────────────
+   The sun/moon sits at ~16% from the left, above the ridges, so light kisses
+   every slope that faces it: thin rim strokes trace the exact terrain outline
+   of the light-facing slopes (left faces for peaks right of the body, right
+   faces for those left of it). The two dominant summits additionally carry a
+   full lit face bounded by real geometry — terrain on one side, an arête
+   crease on the other, the mountain base below. No invented edges. */
+.rimlight {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.rim-far  { stroke: rgba(226, 178, 158, 0.08); stroke-width: 1.1; }
+.rim-mid  { stroke: rgba(232, 184, 162, 0.11); stroke-width: 1.3; }
+.rim-near { stroke: rgba(238, 190, 166, 0.13); stroke-width: 1.5; }
+
+html[data-theme="light"] .rim-far  { stroke: rgba(255, 252, 246, 0.35); }
+html[data-theme="light"] .rim-mid  { stroke: rgba(255, 250, 242, 0.48); }
+html[data-theme="light"] .rim-near { stroke: rgba(255, 248, 238, 0.52); }
+
+/* Rim strokes stay soft — moonlight is diffuse, never razor-edged. */
+.rimlight { filter: blur(0.6px); }
+
+/* Diffuse light spill: the same ridge shapes re-filled with a radial gradient
+   centered on the sky body, so nearby slopes glow gently and the light decays
+   smoothly with distance — no edges exist that aren't terrain. */
+.spill-far  { opacity: 0.06; }
+.spill-mid  { opacity: 0.08; }
+.spill-near { opacity: 0.10; }
+
+html[data-theme="light"] .spill-far  { opacity: 0.20; }
+html[data-theme="light"] .spill-mid  { opacity: 0.27; }
+html[data-theme="light"] .spill-near { opacity: 0.32; }
+
+/* ── Mountains mirrored in the lake ────────────────────────────────────────
+   An inverted, blurred, depth-faded copy of the two nearest ridges hangs
+   beneath the waterline — the tallest peaks reflect deepest, and the
+   surface waves/glints draw over it. */
+.water-mirror {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 78px;
+  filter: blur(3px);
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 92%);
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 92%);
+  animation: mirror-sway 9s ease-in-out infinite alternate;
+}
+
+.water-mirror path {
+  fill: rgba(52, 24, 20, 0.5);
+}
+
+html[data-theme="light"] .water-mirror path {
+  fill: rgba(150, 122, 112, 0.35);
+}
+
+@keyframes mirror-sway {
+  from { transform: skewX(-0.5deg); }
+  to   { transform: skewX(0.5deg); }
+}
+
+/* SVG paints don't inherit the page cross-fade — give every themed water and
+   ridge paint its own, so no region of the scene steps while others glide. */
+.wseg            { transition: stroke 0.9s ease; }
+.glint           { transition: fill 0.9s ease; }
+.rip             { transition: stroke 0.9s ease; }
+.water-mirror path { transition: fill 0.9s ease; }
+.rimlight        { transition: stroke 0.9s ease; }
+.spill           { transition: opacity 0.9s ease; }
+.boat-svg,
+.boat-mirror     { transition: fill 0.9s ease, opacity 0.9s ease; }
+.site-backdrop .stars { transition: opacity 0.9s ease; }
+
+/* ── Birds ────────────────────────────────────────────────────────────────
+   A loose flock gliding across the sky: each bird is two wing strokes that
+   flap on their own beat while the bird crosses the viewport on a long,
+   gently bobbing glide. Faint silhouettes — darker in daylight, a pale
+   whisper against the night sky. Per-bird size/speed/height via inline vars. */
+.site-backdrop .birds {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: 220px;
+}
+
+.bird {
+  position: absolute;
+  overflow: visible;
+  opacity: 0;
+  animation: bird-fly var(--fdur, 46s) linear var(--fdel, 0s) infinite;
+}
+
+.bird path {
+  fill: none;
+  stroke: rgba(216, 186, 170, 0.55);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  transform-box: fill-box;
+}
+
+html[data-theme="light"] .bird path {
+  stroke: rgba(88, 66, 58, 0.6);
+}
+
+.bird .wl { transform-origin: right center; animation: flap-l var(--wdur, 0.8s) ease-in-out infinite alternate; }
+.bird .wr { transform-origin: left center;  animation: flap-r var(--wdur, 0.8s) ease-in-out infinite alternate; }
+
+@keyframes flap-l {
+  from { transform: rotate(16deg); }
+  to   { transform: rotate(-18deg); }
+}
+@keyframes flap-r {
+  from { transform: rotate(-16deg); }
+  to   { transform: rotate(18deg); }
+}
+
+/* Long glide with a soft rise-and-dip, fading in and out at the edges. */
+@keyframes bird-fly {
+  0%   { transform: translate(-4vw, 10px); opacity: 0; }
+  5%   { opacity: var(--fop, 0.6); }
+  25%  { transform: translate(23vw, -8px); }
+  50%  { transform: translate(50vw, 6px); }
+  75%  { transform: translate(77vw, -6px); }
+  95%  { opacity: var(--fop, 0.6); }
+  100% { transform: translate(104vw, 4px); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-backdrop .birds { display: none; }
 }
