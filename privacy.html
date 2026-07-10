@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Privacy Policy — Wanwun</title>
+<meta name="description" content="Wanwun's privacy policy: what data we collect, why, and how you can delete it.">
+<link rel="icon" href="assets/icon.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="index.html"><img src="assets/icon.png" alt=""> Wanwun</a>
+    <nav class="links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main class="doc">
+  <div class="wrap">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: 10 July 2026</p>
+
+    <p>Wanwun ("the app", "we", "us") is developed by <strong>Sahil Pandita</strong>, an
+    individual developer. This policy explains what data the app collects, why, and what
+    control you have over it. We wrote it in plain language on purpose.</p>
+
+    <div class="callout">
+      <p><strong>The short version:</strong> Wanwun works fully offline with no account.
+      Signing in with Google is optional and only unlocks profile sync. We don't show ads,
+      don't use any analytics or tracking SDK, and never access your device location.</p>
+    </div>
+
+    <h2>1. Data we collect</h2>
+
+    <table>
+      <tr><th>What</th><th>When</th><th>Where it's stored</th></tr>
+      <tr>
+        <td>Email, display name, profile photo</td>
+        <td>Only if you choose to sign in with Google</td>
+        <td>Supabase (our backend provider), access-restricted to your account</td>
+      </tr>
+      <tr>
+        <td>Bio, general location, ancestral village (optional, self-entered)</td>
+        <td>Only if you fill these in on your Profile</td>
+        <td>Supabase, access-restricted to your account</td>
+      </tr>
+      <tr>
+        <td>Feedback messages you submit in-app</td>
+        <td>Only when you use the "Send feedback" form</td>
+        <td>Supabase</td>
+      </tr>
+      <tr>
+        <td>Your city selection (for computing your local Panchang)</td>
+        <td>Whenever you pick a city from the in-app list</td>
+        <td>On your device only — never uploaded</td>
+      </tr>
+      <tr>
+        <td>Personal reminders (title, date, category, notes)</td>
+        <td>Whenever you add a reminder</td>
+        <td>On your device only, in a local database — never uploaded</td>
+      </tr>
+      <tr>
+        <td>Crash diagnostics (device model, OS version, stack trace)</td>
+        <td>Only if the app crashes</td>
+        <td>Firebase Crashlytics — contains no personal content</td>
+      </tr>
+    </table>
+
+    <h2>2. What we deliberately don't do</h2>
+    <ul>
+      <li><strong>No location tracking.</strong> Wanwun never requests GPS or device
+        location. The city you use for Panchang calculations is a manual choice from a
+        list, stored only on your device.</li>
+      <li><strong>No ads.</strong> There is no ad SDK anywhere in the app.</li>
+      <li><strong>No analytics or behavioral tracking.</strong> We don't use Google
+        Analytics, Firebase Analytics, or any similar SDK. Crashlytics only activates on
+        an actual crash and reports technical diagnostics, not your activity.</li>
+      <li><strong>No selling or sharing of your data.</strong> Nothing is sold, rented, or
+        shared with advertisers, ever.</li>
+    </ul>
+
+    <h2>3. Why we collect what we collect</h2>
+    <ul>
+      <li><strong>Google sign-in</strong> exists so your profile and preferences can follow
+        you across devices, if you want that. The app is fully usable without it.</li>
+      <li><strong>Feedback</strong> is stored so we can read, reply to, and act on it — your
+        email is attached only so we can respond if needed.</li>
+      <li><strong>Crash reports</strong> help us fix bugs before they affect more people.</li>
+    </ul>
+
+    <h2>4. Your control over your data</h2>
+    <p>You can edit or clear your profile fields anytime from the Profile tab. You can
+    delete individual reminders anytime — they never leave your device in the first place.
+    To request full deletion of your account and any associated Supabase data (profile,
+    feedback), email us at
+    <a href="mailto:sahilhost0h@gmail.com">sahilhost0h@gmail.com</a> — we'll confirm once
+    it's done.</p>
+
+    <h2>5. Third-party services we use</h2>
+    <ul>
+      <li><a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase</a>
+        — authentication and database hosting for optional sign-in, profiles, and feedback.</li>
+      <li><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase
+        Crashlytics</a> — crash diagnostics only.</li>
+      <li><a href="https://developers.google.com/identity" target="_blank" rel="noopener">Google
+        Sign-In</a> — used only if you choose to sign in.</li>
+    </ul>
+
+    <h2>6. Children's privacy</h2>
+    <p>Wanwun is not directed at children under 13 and we do not knowingly collect data
+    from them.</p>
+
+    <h2>7. Changes to this policy</h2>
+    <p>If this policy changes in a meaningful way, we'll update the date at the top of this
+    page and, during the beta, let testers know directly.</p>
+
+    <h2>8. Contact</h2>
+    <p>Questions about this policy or your data:
+    <a href="mailto:sahilhost0h@gmail.com">sahilhost0h@gmail.com</a></p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="privacy.html">Privacy</a>
+      <a href="terms.html">Terms</a>
+      <a href="support.html">Support</a>
+      <a href="mailto:sahilhost0h@gmail.com">Contact</a>
+    </div>
+    <div class="copyright">© 2026 Sahil Pandita. Made for the Kashmiri Pandit community.</div>
+  </div>
+</footer>
+
+</body>
+</html>
