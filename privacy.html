@@ -23,6 +23,7 @@
       <a href="index.html">Home</a>
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
+      <a href="guidelines.html">Guidelines</a>
       <a href="support.html">Support</a>
     </nav>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark theme">
@@ -35,7 +36,7 @@
 <main class="doc">
   <div class="wrap">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: 10 July 2026</p>
+    <p class="updated">Last updated: 14 July 2026</p>
 
     <p>Wanwun ("the app", "we", "us") is developed by <strong>Sahil Pandita</strong>, an
     individual developer. This policy explains what data the app collects, why, and what
@@ -43,7 +44,7 @@
 
     <div class="callout">
       <p><strong>The short version:</strong> Wanwun works fully offline with no account.
-      Signing in with Google is optional and only unlocks profile sync. As of this beta
+      Signing in with Google is optional; it unlocks profile sync and the Baithak community, where anything you post is public. As of this beta
       release, we don't show ads or use any analytics SDK, and we never access your device
       location. Section 2 below explains what may change as the app grows, and how we'll
       handle that honestly.</p>
@@ -67,6 +68,11 @@
         <td>Feedback messages you submit in-app</td>
         <td>Only when you use the "Send feedback" form</td>
         <td>Supabase</td>
+      </tr>
+      <tr>
+        <td><strong>Baithak posts, likes, reports, and blocks</strong></td>
+        <td>Only if you post, like, report, or block in the community tab</td>
+        <td>Supabase. <strong>Posts and likes are public;</strong> reports and blocks are private</td>
       </tr>
       <tr>
         <td>Your city selection (for computing your local Panchang)</td>
@@ -121,34 +127,61 @@
       <li><strong>Feedback</strong> is stored so we can read, reply to, and act on it — your
         email is attached only so we can respond if needed.</li>
       <li><strong>Crash reports</strong> help us fix bugs before they affect more people.</li>
+      <li><strong>Community data</strong> (Baithak) exists to run the community itself — see
+        the next section.</li>
     </ul>
 
-    <h2>4. Your control over your data</h2>
-    <p>You can edit or clear your profile fields anytime from the Profile tab. You can
-    delete individual reminders anytime — they never leave your device in the first place.
-    To request full deletion of your account and any associated Supabase data (profile,
-    feedback), see <a href="delete-account.html">how to delete your account</a>.</p>
+    <h2>4. Community content (the Baithak)</h2>
+    <p>The Baithak is Wanwun's community tab. <strong>Reading it requires no account.</strong>
+    Posting, liking, reporting, and blocking require signing in with Google.</p>
+    <ul>
+      <li><strong>What is public:</strong> the text of your posts, the date you posted, your
+        display name, and your profile photo. Like counts are public. Anyone using Wanwun can
+        see these — treat a post as public speech, and don't put anything in it you wouldn't
+        want widely seen.</li>
+      <li><strong>What is private:</strong> reports you file (the author is never told who
+        reported them — only we can read the report queue) and the list of people you've
+        blocked (visible only to you).</li>
+      <li><strong>Retention:</strong> posts and likes are kept for as long as your account
+        exists, or until you delete them. Hidden or removed posts are retained only as long as
+        needed for moderation and legal compliance.</li>
+      <li><strong>Moderation:</strong> we may read, hide, or remove community content to
+        enforce our <a href="guidelines.html">Community Guidelines</a>. Automated checks
+        (a rate limit and a word filter) run on posts as they're submitted.</li>
+    </ul>
 
-    <h2>5. Third-party services we use</h2>
+    <h2>5. Your control over your data</h2>
+    <p>You can edit or clear your profile fields anytime from the Profile tab. You can
+    delete individual reminders anytime — they never leave your device in the first place.</p>
+    <p><strong>Deleting your account.</strong> Go to <strong>Profile → Delete account</strong>
+    in the app. This <strong>permanently and immediately</strong> deletes your account and
+    everything tied to it — your profile, your Baithak posts and likes, your reports and
+    blocks, and your feedback. It cannot be undone. You can also see
+    <a href="delete-account.html">how to delete your account</a> for the full details.</p>
+    <p>Under India's Digital Personal Data Protection Act, 2023, you may also request access
+    to, correction of, or erasure of your personal data by writing to
+    <a href="mailto:sahilhost0h@gmail.com">sahilhost0h@gmail.com</a>.</p>
+
+    <h2>6. Third-party services we use</h2>
     <ul>
       <li><a href="https://supabase.com/privacy" target="_blank" rel="noopener">Supabase</a>
-        — authentication and database hosting for optional sign-in, profiles, and feedback.</li>
+        — authentication and database hosting for optional sign-in, profiles, feedback, and the Baithak community.</li>
       <li><a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">Firebase
         Crashlytics</a> — crash diagnostics only.</li>
       <li><a href="https://developers.google.com/identity" target="_blank" rel="noopener">Google
         Sign-In</a> — used only if you choose to sign in.</li>
     </ul>
 
-    <h2>6. Children's privacy</h2>
+    <h2>7. Children's privacy</h2>
     <p>Wanwun is not directed at children under 13 and we do not knowingly collect data
     from them.</p>
 
-    <h2>7. Changes to this policy</h2>
+    <h2>8. Changes to this policy</h2>
     <p>If this policy changes in a meaningful way — including introducing ads or
     analytics, as described in Section 2 — we'll update the date at the top of this page
     and, during the beta, let testers know directly.</p>
 
-    <h2>8. Contact</h2>
+    <h2>9. Contact</h2>
     <p>Questions about this policy or your data:
     <a href="mailto:sahilhost0h@gmail.com">sahilhost0h@gmail.com</a></p>
   </div>
@@ -159,6 +192,7 @@
     <div class="foot-links">
       <a href="privacy.html">Privacy</a>
       <a href="terms.html">Terms</a>
+      <a href="guidelines.html">Guidelines</a>
       <a href="support.html">Support</a>
       <a href="mailto:sahilhost0h@gmail.com">Contact</a>
     </div>

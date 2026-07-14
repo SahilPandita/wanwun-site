@@ -1,14 +1,15 @@
 // Light/dark theme toggle — click handler, persistence, and the celestial
-// handoff: the sitting sun/moon arcs clockwise up and off the top of the
-// page, receding into the distance, while its counterpart rises from the
-// left horizon into the same seat, carrying the new light with it (a soft
-// radial wash sweeps across as it climbs, and every themed surface
-// cross-fades underneath). Pages without the sky scene (privacy, terms…)
-// fall back to the soft bloom veil from the toggle button.
+// handoff: both bodies ride ONE orbit (see the exit/enter-arc CSS). The
+// sitting sun/moon climbs the orbit's upper segment and exits through the
+// TOP of the page at mid-sky, while its counterpart rises along the lower
+// segment — from the left edge, low over the mountains — into the same
+// seat, carrying the new light with it (a soft radial wash sweeps across
+// as it climbs, and every themed surface cross-fades underneath). Pages
+// without the sky scene (privacy, terms…) fall back to the soft bloom veil
+// from the toggle button.
 (function () {
-  var EXIT_MS = 1450;   // outgoing body's departure arc
   var SWAP_MS = 700;    // theme swaps as the riser climbs, under the wash peak
-  var TOTAL_MS = 2000;  // full performance, then cleanup
+  var TOTAL_MS = 2100;  // full performance (exit 1.6s; enter 0.45s + 1.6s), then cleanup
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var transitioning = false;
 
