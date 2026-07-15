@@ -12,7 +12,11 @@
 <link rel="icon" href="../assets/leaf.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/style.css">
 <style>
-  .share-land { max-width: 560px; margin: 0 auto; padding: 64px 24px 48px; text-align: center; }
+  /* Lift the content above the decorative backdrop + its fade veil (same as
+     .hero / .features / footer in the shared stylesheet) — otherwise the veil
+     paints over the button + fine print and greys them out. */
+  .share-land { position: relative; z-index: 1; max-width: 560px; margin: 0 auto;
+    padding: 64px 24px 48px; text-align: center; }
   .share-land .leaf { width: 72px; height: 72px; margin-bottom: 20px; }
   .share-land h1 { font-size: 1.6rem; margin: 0 0 10px; }
   .share-land p { opacity: .82; line-height: 1.55; margin: 0 auto 28px; max-width: 44ch; }
