@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>(function(){var t=localStorage.getItem("wanwun-theme")||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");if(t==="light")document.documentElement.setAttribute("data-theme","light");})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Say Namaskar to the Baithak — Wanwun</title>
+<meta name="description" content="The Baithak is a community corner inside Wanwun — read announcements and festival notes, react to what matters, and join the conversation with fellow Kashmiri Pandits.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Say Namaskar to the Baithak">
+<meta property="og:description" content="A community corner, now inside Wanwun — read, react, and join the conversation.">
+<meta property="og:image" content="https://sahilpandita.github.io/wanwun-site/assets/launches/baithak-conversation.png">
+<link rel="icon" href="../assets/leaf.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../assets/apple-touch.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<script src="../assets/theme-toggle.js" defer></script>
+<style>
+  .post { max-width: 720px; margin: 0 auto; padding: 8px 24px 40px; position: relative; z-index: 1; }
+  .post .back { display: inline-block; color: var(--on-surface-variant); font-size: 0.9rem; margin: 0 0 20px; }
+  .post .back:hover { color: var(--primary-bright); text-decoration: none; }
+  .post .eyebrow { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; flex-wrap: wrap; }
+  .post .tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--on-primary); background: var(--primary-container); padding: 4px 10px; border-radius: 999px; }
+  .post .date { font-size: 0.85rem; color: var(--on-surface-variant); }
+  .post h1 { font-size: clamp(2.1rem, 5.5vw, 3.2rem); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 12px; }
+  .post .lede { font-size: 1.2rem; line-height: 1.6; color: var(--on-surface-variant); margin: 0 0 8px; }
+  .post h2 { font-size: 1.5rem; letter-spacing: -0.01em; margin: 48px 0 14px; }
+  .post p { font-size: 1.05rem; line-height: 1.75; color: var(--on-surface); margin: 0 0 18px; }
+  .post p.muted { color: var(--on-surface-variant); }
+  .post a { color: var(--primary-bright); }
+
+  /* Phone-screenshot figure — the shot floats on the aurora with a soft frame. */
+  .shot { margin: 26px 0 8px; text-align: center; }
+  .shot img { width: 100%; max-width: 300px; border-radius: 22px; display: inline-block;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 30px 60px -24px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.04); }
+  html[data-theme="light"] .shot img { border-color: rgba(0,0,0,0.08);
+    box-shadow: 0 30px 60px -28px rgba(0,0,0,0.35); }
+  .shot figcaption { font-size: 0.85rem; color: var(--on-surface-variant); margin-top: 14px; }
+
+  .post-cta { margin: 44px 0 0; padding: 28px; text-align: center; border-radius: 24px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12);
+    -webkit-backdrop-filter: blur(20px) saturate(160%); backdrop-filter: blur(20px) saturate(160%); }
+  html[data-theme="light"] .post-cta { background: rgba(255,255,255,0.42); border-color: rgba(255,255,255,0.6); }
+  .post-cta h2 { margin: 0 0 8px; }
+  .post-cta p { margin: 0 auto 18px; max-width: 40ch; }
+  .post-cta .store { display: inline-block; }
+  .post-cta .store img { height: 56px; width: auto; }
+</style>
+</head>
+<body>
+
+<div class="site-backdrop compact" aria-hidden="true">
+  <div class="aurora"></div>
+</div>
+
+<header class="site-nav">
+  <div class="wrap">
+    <a class="brand" href="../index.html"><img src="../assets/leaf.svg" alt=""> Wanwun</a>
+    <nav class="links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">Launches</a>
+      <a href="../support.html">Support</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch between light and dark theme">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main>
+  <article class="post">
+    <a class="back" href="index.html">← Launches</a>
+
+    <div class="eyebrow">
+      <span class="tag">New feature</span>
+      <span class="date">15 July 2026</span>
+    </div>
+    <h1>Say Namaskar to the Baithak</h1>
+    <p class="lede">A community corner, now inside Wanwun.</p>
+
+    <p>Wanwun has always been about staying close to our roots — the Panchang, the festival
+       dates, the bhajans. The Baithak adds the piece that was missing: each other. It's a calm,
+       ad-free corner inside the app where the Kashmiri Pandit community can gather, share a
+       word, and stay connected — wherever in the world we've settled.</p>
+
+    <h2>One place for the community</h2>
+    <p>Open the Baithak and you'll find the community's noticeboard: festival reminders, gathering
+       announcements, and the small moments that keep us in touch — like a Vatuk Puja invite for
+       Herath, or a quiet welcome to the corner. It's one clean feed, newest first, with the most
+       timely notes pinned to the top so nothing important slips by.</p>
+    <figure class="shot">
+      <img src="../assets/launches/baithak-feed.png" alt="The Baithak feed showing a Herath gathering announcement and a welcome post">
+      <figcaption>The Baithak feed — announcements and moments, all in one place.</figcaption>
+    </figure>
+
+    <h2>Read, react, and reply</h2>
+    <p>Tap any post to read it in full. A tap of the heart is an easy way to say “I'm here.” And
+       when you have something to add, the conversation happens right below — leave a comment,
+       reply to someone, and keep the thread going. It feels like the corner of a room where
+       everyone's caught up on the news.</p>
+    <figure class="shot">
+      <img src="../assets/launches/baithak-conversation.png" alt="A Baithak post with a like, a share button, and a comment from a community member">
+      <figcaption>Every post opens up to reactions and a conversation.</figcaption>
+    </figure>
+
+    <h2>Say it with a smile</h2>
+    <p>Words don't always carry the warmth. The comment box has a full emoji picker built right
+       in, so a 🙏 or a 🪔 is only a tap away — the little touches that make a message feel like
+       it came from home.</p>
+    <figure class="shot">
+      <img src="../assets/launches/baithak-emoji.png" alt="The emoji picker open inside a Baithak comment box">
+      <figcaption>A full emoji picker, right where you're typing.</figcaption>
+    </figure>
+
+    <p class="muted">The Baithak is a respectful, moderated space. A quick read of the
+       <a href="../guidelines.html">community guidelines</a> keeps it warm for everyone.</p>
+
+    <div class="post-cta">
+      <h2>Come sit with us</h2>
+      <p>The Baithak is live in Wanwun today. Update the app, open the Baithak tab, and say Namaskar.</p>
+      <a class="store" href="https://play.google.com/store/apps/details?id=com.wanwun.app">
+        <img src="../assets/badges/google-play-badge.png" alt="Get Wanwun on Google Play">
+      </a>
+    </div>
+  </article>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="../index.html">Home</a>
+      <a href="index.html">Launches</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../guidelines.html">Guidelines</a>
+      <a href="../support.html">Support</a>
+    </div>
+    <div class="copyright">© 2026 Sahil Pandita. Made for the Kashmiri Pandit community.</div>
+  </div>
+</footer>
+
+</body>
+</html>
