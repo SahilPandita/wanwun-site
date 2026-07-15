@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<script>(function(){var t=localStorage.getItem("wanwun-theme")||(window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");if(t==="light")document.documentElement.setAttribute("data-theme","light");})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Baithak post · Wanwun</title>
+<meta name="description" content="Someone shared a post from the Baithak — Wanwun's Kashmiri Pandit community. Get the app to read it and join in.">
+<meta property="og:title" content="A Baithak post · Wanwun">
+<meta property="og:description" content="From the Baithak — Wanwun's Kashmiri Pandit community. Get the app to read it and join in.">
+<meta property="og:type" content="website">
+<link rel="icon" href="../assets/leaf.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+  .share-land { max-width: 560px; margin: 0 auto; padding: 64px 24px 48px; text-align: center; }
+  .share-land .leaf { width: 72px; height: 72px; margin-bottom: 20px; }
+  .share-land h1 { font-size: 1.6rem; margin: 0 0 10px; }
+  .share-land p { opacity: .82; line-height: 1.55; margin: 0 auto 28px; max-width: 44ch; }
+  .store-btn { display: inline-flex; align-items: center; gap: 10px; padding: 14px 26px;
+    border-radius: 999px; font-weight: 700; text-decoration: none;
+    background: var(--accent, #c1443c); color: #fff; font-size: 1.05rem; }
+  .store-btn:hover { filter: brightness(1.06); }
+  .fine { margin-top: 22px; font-size: .85rem; opacity: .6; }
+</style>
+</head>
+<body>
+
+<div class="site-backdrop compact" aria-hidden="true">
+  <div class="aurora"></div>
+</div>
+
+<main class="share-land">
+  <img class="leaf" src="../assets/leaf.svg" alt="">
+  <h1>You've been invited to the Baithak 🪔</h1>
+  <p>This is a post from the <strong>Baithak</strong> — the community corner inside
+     <strong>Wanwun</strong>, a companion app for the Kashmiri Pandit community. Install
+     Wanwun to read it, react, and join the conversation.</p>
+
+  <a class="store-btn" id="getApp"
+     href="https://play.google.com/store/apps/details?id=com.wanwun.app">
+     Get Wanwun on Google Play
+  </a>
+
+  <p class="fine" id="fine">Already have Wanwun? Open this link on your phone and it'll take
+     you straight to the post.</p>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-links">
+      <a href="../index.html">Home</a>
+      <a href="../privacy.html">Privacy</a>
+      <a href="../guidelines.html">Guidelines</a>
+      <a href="../support.html">Support</a>
+    </div>
+    <div class="copyright">© 2026 Sahil Pandita. Made for the Kashmiri Pandit community.</div>
+  </div>
+</footer>
+
+<script>
+  // Preserve the shared post id on the Play link (Play passes ?referrer through to the
+  // app on install; and once Android App Links are verified, an installed app opens the
+  // post directly — this page only ever shows for people WITHOUT the app).
+  (function () {
+    var id = new URLSearchParams(location.search).get("id");
+    if (id && /^\d+$/.test(id)) {
+      var a = document.getElementById("getApp");
+      a.href += "&referrer=" + encodeURIComponent("post_" + id);
+    }
+  })();
+</script>
+
+</body>
+</html>
