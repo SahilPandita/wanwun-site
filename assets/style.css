@@ -1812,7 +1812,9 @@ html[data-theme="light"] .bird path {
 
 .launch-carousel {
   display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory;
-  padding: 4px 4px 14px; -webkit-overflow-scrolling: touch;
+  /* overflow-x:auto forces overflow-y to auto too, which clips the hover lift +
+     glow. Generous top/bottom padding gives the -6px lift and its shadow room. */
+  padding: 18px 6px 26px; -webkit-overflow-scrolling: touch;
   scrollbar-width: none; -ms-overflow-style: none;
 }
 .launch-carousel::-webkit-scrollbar { display: none; }
