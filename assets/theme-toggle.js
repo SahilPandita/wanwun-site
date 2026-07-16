@@ -115,3 +115,30 @@
     });
   });
 })();
+
+// ── "Resources" nav dropdown ──────────────────────────────────────────────
+// Hover-open lives in CSS (fine pointers only); this adds click/tap toggle
+// for touch devices, plus outside-click and Escape to close.
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var dd = document.querySelector('.nav-dd');
+    if (!dd) return;
+    var btn = dd.querySelector('.nav-dd-toggle');
+
+    function setOpen(open) {
+      dd.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      setOpen(!dd.classList.contains('open'));
+    });
+    document.addEventListener('click', function (e) {
+      if (!dd.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { setOpen(false); btn.blur(); }
+    });
+  });
+})();
